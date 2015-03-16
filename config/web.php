@@ -1,14 +1,19 @@
 <?php
 
-$config = [
+$config = [    
     'components' => [
+        'defaultRoute' => 'main/default/index',
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,            
         ],
         'user' => [
-            'identityClass' => 'app\models\User',
+            'identityClass' => 'app\modules\user\models\User',
             'enableAutoLogin' => true,
+            'loginUrl' => ['user/default/login'],
         ],
+        'errorHandler' => [
+            'errorAction' => 'main/default/error',
+        ],        
         'request' => [          
             'cookieValidationKey' => 'q-IJ-YKxsHRGRw4NuhSveF1YR7JaMNcB',
         ],

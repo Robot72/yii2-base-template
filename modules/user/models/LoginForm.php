@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace app\modules\user\models;
 
 use Yii;
 use yii\base\Model;
@@ -23,11 +23,8 @@ class LoginForm extends Model
     public function rules()
     {
         return [
-            // username and password are both required
-            [['username', 'password'], 'required'],
-            // rememberMe must be a boolean value
-            ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
+            [['username', 'password'], 'required'],            
+            ['rememberMe', 'boolean'],            
             ['password', 'validatePassword'],
         ];
     }
@@ -45,7 +42,11 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Incorrect username or password.');
+                $this->addError($attribute, 'Не правильный логин или пароль.');
+            } elseif ($user && $user->status == User::STATUS_BLOCKED) {
+                $this->addError('username', 'Ваш аккаунт заблокирован.');
+            } elseif ($user && $user->status == User::STATUS_WAIT) {
+                $this->addError('username', 'Ваш аккаунт не подтвежден.');
             }
         }
     }

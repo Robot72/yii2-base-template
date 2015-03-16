@@ -3,8 +3,8 @@
 use yii\helpers\ArrayHelper;
 
 $params = ArrayHelper::merge(
-    require(__DIR__.'params.php'),
-    require(__DIR__.'params-local.php')
+    require(__DIR__.'/params.php'),
+    require(__DIR__.'/params-local.php')
 );
 
 return [
@@ -20,13 +20,16 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '<_c:[\w\-]+>/<id:\d+>' => '<_c>/view',
-                '<_c:[\w\-]+>' => '<_c>/index',
-                '<_c:[\w\-]+>/<_a:[\w\-]+>/<id:\d+>' => '<_c>/<_a>',
+                '' => 'main/default/index',
+                'contact' => 'main/contact/index',
+                '<_a:error>' => 'main/default/<_a>',
+                '<_a:(login|logout)>' => 'user/default/<_a>',
+                
+                '<_m:[\w\-]+>/<_c:[\w\-]+>/<_a:[\w\-]+>/<id:\d+>' => '<_m>/<_c>/<_a>',
+                '<_m:[\w\-]+>/<_c:[\w\-]+>/<id:\d+>' => '<_m>/<_c>/view',
+                '<_m:[\w\-]+>' => '<_m>/default/index',
+                '<_m:[\w\-]+>/<_c:[\w\-]+>' => '<_m>/<_c>/index',
             ],
-        ],        
-        'errorHandler' => [
-            'errorAction' => 'site/error',
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',            
@@ -38,6 +41,14 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+    ],
+    'modules' => [
+        'main' => [
+            'class' => 'app\modules\main\Module',
+        ],
+        'user' => [
+            'class' => 'app\modules\user\Module',
         ],
     ],
     'params' => $params,
