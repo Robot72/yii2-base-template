@@ -4,6 +4,7 @@ use yii\bootstrap\Nav;
 use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use app\components\widgets\AlertWidget;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -37,6 +38,9 @@ AppAsset::register($this);
                 'items' => [
                     ['label' => 'Home', 'url' => ['/main/default/index']],
                     ['label' => 'Contact', 'url' => ['/main/contact']],
+                     Yii::$app->user->isGuest ?
+                        ['label' => 'Sign Up', 'url' => ['/user/default/signup']] :
+                        false,
                     Yii::$app->user->isGuest ?
                         ['label' => 'Login', 'url' => ['/user/default/login']] :
                         ['label' => 'Logout (' . Yii::$app->user->identity->username . ')',
@@ -51,6 +55,7 @@ AppAsset::register($this);
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
+            <?= AlertWidget::widget() ?>
             <?= $content ?>
         </div>
     </div>
