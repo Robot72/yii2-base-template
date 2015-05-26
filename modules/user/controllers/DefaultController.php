@@ -80,7 +80,7 @@ class DefaultController extends Controller
         return $this->goHome();
     }
     
-     public function actionSignup()
+    public function actionSignup()
     {
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post())) {

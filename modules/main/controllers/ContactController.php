@@ -25,6 +25,10 @@ class ContactController extends Controller {
     public function actionIndex()
     {
         $model = new ContactForm();
+        if($user = Yii::$app->user->identity) {
+            $model->name = $user->username;
+            $model->email = $user->email;
+        }
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
 

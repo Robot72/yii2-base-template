@@ -9,6 +9,7 @@ $params = ArrayHelper::merge(
 
 return [
     'id' => 'basic',
+    'name' => 'Заготовка приложения',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
@@ -41,6 +42,16 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'i18n' => [
+            'translations' => [
+                'app*' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'fileMap' => [
+                        'app' => 'app.php',
+                    ],
+                ]
+            ]
         ],
     ],
     'modules' => [
