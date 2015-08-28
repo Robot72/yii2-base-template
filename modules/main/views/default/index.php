@@ -13,6 +13,7 @@ $this->title = Yii::$app->name;
 
         <div class="row">
             <div class="col-lg-4">
+                <?= INTL_ICU_VERSION ?>
             </div>
         </div>
 

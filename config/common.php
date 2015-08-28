@@ -10,6 +10,7 @@ $params = ArrayHelper::merge(
 return [
     'id' => 'basic',
     'name' => 'Заготовка приложения',
+    'language' => 'ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [

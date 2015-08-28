@@ -2,9 +2,10 @@
 
 namespace app\modules\user\models;
 
-use yii\behaviors\TimestampBehavior;
-use yii\web\IdentityInterface;
 use Yii;
+use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
+use yii\web\IdentityInterface;
 
 /**
  * This is the model class for table "{{%user}}".
@@ -113,13 +114,53 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->auth_key;
     }
- 
+    
     /**
-     * @inheritdoc
+     * Return name of the user status
+     * @return type string 
      */
-    public function validateAuthKey($authKey)
+    public function getStatusName() 
     {
-        return $this->getAuthKey() === $authKey;
+        return ArrayHelper::getValue(self::getStatusesArray(), $this->status);
+    }   
+    
+    /**
+     * Return array is contain all status key and name of the status
+     * @return type array
+     */
+    public static function getStatusesArray()
+    {
+        return [
+            self::STATUS_BLOCKED => "Заблокирован",
+            self::STATUS_ACTIVE => "Активен",
+            self::STATUS_WAIT => "Ожидает подтверждения",                
+        ];
+    }
+    
+    /**
+     * @param string $email_confirm_token
+     * @return static|null
+     */
+    public static function findByEmailConfirmToken($email_confirm_token)
+    {
+        return static::findOne(['email_confirm_token' => $email_confirm_token, 'status' => self::STATUS_WAIT]);
+    }
+    
+    /**
+     * Finds user by password reset token
+     *
+     * @param string $token password reset token
+     * @return static|null
+     */
+    public static function findByPasswordResetToken($token)
+    {
+        if (!static::isPasswordResetTokenValid($token)) {
+            return null;
+        }
+        return static::findOne([
+            'password_reset_token' => $token,
+            'status' => self::STATUS_ACTIVE,
+        ]);
     }
     
     /**
@@ -132,7 +173,39 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return static::findOne(['username' => $username]);
     }
- 
+     
+    /**
+     * Generates "remember me" authentication key
+     */
+    public function generateAuthKey()
+    {
+        $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+    
+    /**
+     * Generates email confirmation token
+     */
+    public function generateEmailConfirmToken()
+    {
+        $this->email_confirm_token = Yii::$app->security->generateRandomString();
+    }
+    
+    /**
+     * Generates new password reset token
+     */
+    public function generatePasswordResetToken()
+    {
+        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
+    }
+    
+    /**
+     * @inheritdoc
+     */
+    public function validateAuthKey($authKey)
+    {
+        return $this->getAuthKey() === $authKey;
+    }
+    
     /**
      * Validates password
      *
@@ -153,15 +226,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
- 
-    /**
-     * Generates "remember me" authentication key
-     */
-    public function generateAuthKey()
-    {
-        $this->auth_key = Yii::$app->security->generateRandomString();
-    }
- 
+
     /**
      * @inheritdoc
      */
@@ -176,23 +241,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return false;
     }
     
-    /**
-     * Finds user by password reset token
-     *
-     * @param string $token password reset token
-     * @return static|null
-     */
-    public static function findByPasswordResetToken($token)
-    {
-        if (!static::isPasswordResetTokenValid($token)) {
-            return null;
-        }
-        return static::findOne([
-            'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
-        ]);
-    }
- 
     /**
      * Finds out if password reset token is valid
      *
@@ -211,39 +259,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     }
  
     /**
-     * Generates new password reset token
-     */
-    public function generatePasswordResetToken()
-    {
-        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
-    }
- 
-    /**
-     * Removes password reset token
-     */
-    public function removePasswordResetToken()
-    {
-        $this->password_reset_token = null;
-    }
-    
-    /**
-     * @param string $email_confirm_token
-     * @return static|null
-     */
-    public static function findByEmailConfirmToken($email_confirm_token)
-    {
-        return static::findOne(['email_confirm_token' => $email_confirm_token, 'status' => self::STATUS_WAIT]);
-    }
- 
-    /**
-     * Generates email confirmation token
-     */
-    public function generateEmailConfirmToken()
-    {
-        $this->email_confirm_token = Yii::$app->security->generateRandomString();
-    }
- 
-    /**
      * Removes email confirmation token
      */
     public function removeEmailConfirmToken()
@@ -251,18 +266,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         $this->email_confirm_token = null;
     }
     
-    public function getStatusName() 
+    /**
+     * Removes password reset token
+     */
+    public function removePasswordResetToken()
     {
-        $statuses = self::getStatusesArray();
-        return isset($statuses[$this->status]) ? $statuses[$this->status] : '';
-    }   
-    
-    public static function getStatusesArray()
-    {
-        return [
-            self::STATUS_BLOCKED => "Заблокирован",
-            self::STATUS_ACTIVE => "Активен",
-            self::STATUS_WAIT => "Ожидает подтверждения",                
-        ];
+        $this->password_reset_token = null;
     }
 }
