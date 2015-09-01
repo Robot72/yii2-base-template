@@ -7,6 +7,7 @@ return [
     'NAV_LOGIN'     => 'Вход',
     'NAV_LOGOUT'    => 'Выход',
     'SUBMIT'        => 'Отправить',
+    'BTN_SAVE'      => 'Сохранить',
     
     'CONTACT_THANKS' => 'Спасибо вам, что связались с нами. Мы ответим вам в ближайшее время.',
     'CONTACT_TEXT'  => 'Если у вас имеется вопрос, заполните следующие поля и отправьте нам его.',
@@ -25,4 +26,9 @@ return [
     
     'SIGNUP_MESS_USERNAME'  => 'Это имя пользователя уже занято',
     'SIGNUP_MESS_EMAIL'     => 'Этот е-майл адрес уже занят',
+    
+    'USER_PROFILE_TITLE' => 'Профиль пользователя',
+    'USER_PROFILE_UPDATE' => 'Изменение данных профиля',
+    'ERROR_WRONG_CURRENT_PASSWORD' => 'Текущий пароль не верен',
+    'TITLE_PASSWORD_CHANGE' => 'Изменение пароля',
 ];

@@ -54,7 +54,8 @@ class DefaultController extends Controller
     
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(['/user/profile'], 301);
+        //return $this->render('index');
     }
     
     public function actionLogin()
