@@ -41,9 +41,9 @@ AppAsset::register($this);
                     ['label' => Yii::t('app', 'NAV_CONTACT'), 'url' => ['/main/contact']],
                     Yii::$app->user->isGuest ?
                             ['label' => Yii::t('app', 'NAV_SIGNUP'), 'url' => ['/user/default/signup']] :
-                            false,
+                            '',
                     Yii::$app->user->isGuest ?
-                            ['label' => Yii::t('app', 'NAV_LOGIN'), 'url' => ['/user/default/login']] :
+                            ['label' => Yii::t('app', 'NAV_LOGIN'), 'url' => ['/user/default/login']] : 
                             ['label' => Yii::t('app', 'NAV_LOGOUT') . ' (' . Yii::$app->user->identity->username . ')',
                         'url' => ['/user/default/logout'],
                         'linkOptions' => ['data-method' => 'post']],

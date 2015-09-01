@@ -5,7 +5,7 @@ return [
         'db' => [
             'dsn' => 'mysql:host=localhost;dbname=DevYii2Modules',
             'username' => 'root',
-            'password' => 'annet2711',
+            'password' => '',
         ],        
         'mailer' => [
             'useFileTransport' => true,

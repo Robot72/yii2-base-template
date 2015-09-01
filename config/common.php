@@ -9,7 +9,7 @@ $params = ArrayHelper::merge(
 
 return [
     'id' => 'basic',
-    'name' => 'Заготовка приложения',
+    'name' => 'Building App',
     'language' => 'ru',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
