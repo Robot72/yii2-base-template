@@ -16,8 +16,40 @@ $config = [
         ],        
         'request' => [          
             'cookieValidationKey' => 'q-IJ-YKxsHRGRw4NuhSveF1YR7JaMNcB',
+        ],        
+    ],
+    'modules' => [
+        'main' => [
+            'class' => 'app\modules\main\Module',
         ],
-    ],        
+        'user' => [
+            'class' => 'app\modules\user\Module',
+        ],
+        'admin' => [
+            'class' => 'app\modules\admin\Module',
+        ],
+        'rbac' => [
+            'class' => 'mdm\admin\Module',
+            'layout' => 'left-menu',
+            'mainLayout' => '@app/views/layouts/main.php',
+            'controllerMap' => [
+                'assignment' => [
+                    'class' => 'mdm\admin\controllers\AssignmentController',
+                    'userClassName' => 'app\modules\user\models\User',
+                    'idField' => 'id'
+                ],          
+            ],
+        ]
+    ],
+    'as access' => [
+        'class' => 'mdm\admin\components\AccessControl',
+        'allowActions' => [
+            'main/*',
+            'admin/*',
+            'rbac/*',
+            'user/*'
+        ]
+    ]
 ];
 
 if (YII_ENV_DEV) {

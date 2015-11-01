@@ -57,18 +57,7 @@ return [
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
         ]
-    ],
-    'modules' => [
-        'main' => [
-            'class' => 'app\modules\main\Module',
-        ],
-        'user' => [
-            'class' => 'app\modules\user\Module',
-        ],
-        'admin' => [
-            'class' => 'app\modules\admin\Module',
-        ],
-    ],
+    ],    
     'params' => $params,
 ];
 
