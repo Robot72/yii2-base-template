@@ -37,14 +37,17 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-                    ['label' => Yii::t('app', 'NAV_HOME'), 'url' => ['/main/default/index']],
-                    ['label' => Yii::t('app', 'NAV_CONTACT'), 'url' => ['/main/contact']],
+                    ['label' => Yii::t('app', 'Nav home'), 'url' => ['/main/default/index']],
+                    ['label' => Yii::t('app', 'Nav contact'), 'url' => ['/main/contact']],
                     Yii::$app->user->isGuest ?
-                            ['label' => Yii::t('app', 'NAV_SIGNUP'), 'url' => ['/user/default/signup']] :
+                            ['label' => Yii::t('app', 'Nav signup'), 'url' => ['/user/default/signup']] :
+                            '',
+                    !Yii::$app->user->isGuest ?
+                            ['label' => Yii::t('app', 'User profile'), 'url' => ['/user/profile']] :
                             '',
                     Yii::$app->user->isGuest ?
-                            ['label' => Yii::t('app', 'NAV_LOGIN'), 'url' => ['/user/default/login']] : 
-                            ['label' => Yii::t('app', 'NAV_LOGOUT') . ' (' . Yii::$app->user->identity->username . ')',
+                            ['label' => Yii::t('app', 'Nav login'), 'url' => ['/user/default/login']] : 
+                            ['label' => Yii::t('app', 'Nav logout') . ' (' . Yii::$app->user->identity->username . ')',
                         'url' => ['/user/default/logout'],
                         'linkOptions' => ['data-method' => 'post']],
                 ],

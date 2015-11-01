@@ -23,11 +23,11 @@ class ConfirmEmailForm extends Model
     public function __construct($token, $config = [])
     {
         if (empty($token) || !is_string($token)) {
-            throw new InvalidParamException('Отсутствует код подтверждения.');
+            throw new InvalidParamException(Yii::t('app', 'No confirm code'));
         }
         $this->_user = User::findByEmailConfirmToken($token);
         if (!$this->_user) {
-            throw new InvalidParamException('Неверный токен.');
+            throw new InvalidParamException(Yii::t('app', 'Invalid token'));
         }
         parent::__construct($config);
     }

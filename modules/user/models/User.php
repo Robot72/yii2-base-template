@@ -44,12 +44,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return [
             ['username', 'required'],
             ['username', 'match', 'pattern' => '#^[\w_-]+$#i'],
-            ['username', 'unique', 'targetClass' => self::className(), 'message' => 'Это имя пользователя уже занято.'],
+            ['username', 'unique', 'targetClass' => self::className(), 'message' => Yii::t('app', 'Signup username busy')],
             ['username', 'string', 'min' => 3, 'max' => 255], 
             
             ['email', 'required'],
             ['email', 'email'],
-            ['email', 'unique', 'targetClass' => self::className(), 'message' => 'Этот e-mail уже занят.'],
+            ['email', 'unique', 'targetClass' => self::className(), 'message' => Yii::t('app', 'Signup email busy')],
             ['email', 'string', 'max' => 255],
             
             ['status', 'integer'],
@@ -65,11 +65,11 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             'id' => 'ID',
-            'created_at' => 'Создан',
-            'updated_at' => 'Обновлен',
-            'username' => 'Имя пользователя',            
-            'email' => 'Email',
-            'status' => 'Статус',
+            'created_at' => Yii::t('app', 'Create at'),
+            'updated_at' => Yii::t('app', 'Update at'),
+            'username' => Yii::t('app', 'Username'),            
+            'email' => Yii::t('app', 'Email'),
+            'status' => Yii::t('app', 'Status'),
         ];
     }
 
@@ -139,9 +139,9 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public static function getStatusesArray()
     {
         return [
-            self::STATUS_BLOCKED => "Заблокирован",
-            self::STATUS_ACTIVE => "Активен",
-            self::STATUS_WAIT => "Ожидает подтверждения",                
+            self::STATUS_BLOCKED => Yii::t('app', 'Status blocked'),
+            self::STATUS_ACTIVE => Yii::t('app', 'Status active'),
+            self::STATUS_WAIT => Yii::t('app', 'Status wait'),                
         ];
     }
     

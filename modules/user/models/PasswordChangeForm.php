@@ -15,6 +15,14 @@ class PasswordChangeForm extends Model
     
     public $_user;
     
+    public function attributeLabels() {
+        return [
+            'currentPassword' => Yii::t('app', 'Current password'),
+            'newPassword' => Yii::t('app', 'New password'),
+            'newPasswordRepeat' => Yii::t('app', 'New password repeat'),
+        ];
+    }
+    
     public function __construct(User $user, $config = array()) 
     {
         if(empty($user))
@@ -41,7 +49,7 @@ class PasswordChangeForm extends Model
         {
             if(!$this->_user->validatePassword($attribute))
             {
-                $this->addError($attribute, Yii::t('app', 'ERROR_WRONG_CURRENT_PASSWORD'));
+                $this->addError($attribute, Yii::t('app', 'Error wrong current pass'));
             }
         }
     }

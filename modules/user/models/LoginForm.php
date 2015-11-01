@@ -32,9 +32,9 @@ class LoginForm extends Model
     public function attributeLabels()
     {
         return [
-            'username' => Yii::t('app', 'LABEL_USERNAME'),
-            'password' => Yii::t('app', 'LABEL_PASSWORD'),
-            'rememberMe' => Yii::t('app', 'LABEL_REMEMBERME'),
+            'username' => Yii::t('app', 'Username'),
+            'password' => Yii::t('app', 'Password'),
+            'rememberMe' => Yii::t('app', 'Rememberme'),
         ];
     }
 
@@ -51,11 +51,11 @@ class LoginForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, Yii::t('app', 'USER_LOGIN_WRONGPASS'));
+                $this->addError($attribute, Yii::t('app', 'Login wrongpass'));
             } elseif ($user && $user->status == User::STATUS_BLOCKED) {
-                $this->addError('username', Yii::t('app', 'USER_LOGIN_BLOCKED'));
+                $this->addError('username', Yii::t('app', 'Login blocked'));
             } elseif ($user && $user->status == User::STATUS_WAIT) {
-                $this->addError('username', Yii::t('app', 'USER_LOGIN_WAIT'));
+                $this->addError('username', Yii::t('app', 'Login wait'));
             }
         }
     }

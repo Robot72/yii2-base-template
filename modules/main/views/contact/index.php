@@ -7,7 +7,7 @@ use yii\captcha\Captcha;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\ContactForm */
 
-$this->title = Yii::t('app', 'NAV_CONTACT');
+$this->title = Yii::t('app', 'Nav contact');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="main-contact">
@@ -16,13 +16,13 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php if (Yii::$app->session->hasFlash('contactFormSubmitted')): ?>
 
     <div class="alert alert-success">
-        <?= Yii::t('app', 'CONTACT_THANKS'); ?>
+        <?= Yii::t('app', 'Contact thanks'); ?>
     </div>
 
     <?php else: ?>
 
     <p>
-        <?= Yii::t('app', 'CONTACT_TEXT'); ?>
+        <?= Yii::t('app', 'Contact text'); ?>
     </p>
 
     <div class="row">
@@ -37,7 +37,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'template' => '<div class="row"><div class="col-lg-3">{image}</div><div class="col-lg-6">{input}</div></div>',
                 ]) ?>
                 <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app', 'SUBMIT'), ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
+                    <?= Html::submitButton(Yii::t('app', 'Submit'), ['class' => 'btn btn-primary', 'name' => 'contact-button']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>
